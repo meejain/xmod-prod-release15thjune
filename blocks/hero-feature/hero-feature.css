@@ -1,47 +1,150 @@
+/* Block: hero-feature
+ * AbbVie "Our Impact" feature banner: full-width lavender panel with a square
+ * feature image on the left and an eyebrow + large heading + CTA on the right.
+ * Values extracted from source computed styles on https://www.abbvie.com/.
+ *
+ * Authored DOM (content/index.plain.html):
+ *   .hero-feature
+ *     > div            (row 1: image)
+ *        > div > picture > img
+ *     > div            (row 2: content)
+ *        > div         eyebrow text ("Our Impact")
+ *        > div > h3    heading
+ *        > div > a     CTA ("Learn more"; EDS decorates to .button)
+ */
+
+/* Full-width panel: override the section max-width + padding so the
+   lavender background bleeds edge to edge. */
 .hero-feature-container .hero-feature-wrapper {
   max-width: unset;
   padding: 0;
 }
 
 .hero-feature {
-  position: relative;
-  padding: 40px 24px;
-  min-height: 300px;
-}
+  /* CTA color comes straight from the source (bright AbbVie link blue). */
+  --hero-feature-cta-color: #0066f5;
 
-.hero-feature h1,
-.hero-feature h2,
-.hero-feature h3,
-.hero-feature h4,
-.hero-feature h5,
-.hero-feature h6,
-.hero-feature p {
-  max-width: 1200px;
-  margin-left: auto;
-  margin-right: auto;
-  color: var(--background-color);
-}
-
-.hero-feature.no-image * {
+  background-color: var(--abbvie-light, #f1f3ff);
   color: var(--text-color);
+  padding: 48px 24px;
+}
+
+/* Image row */
+.hero-feature > div:first-child {
+  margin: 0;
 }
 
 .hero-feature picture {
-  position: absolute;
-  z-index: -1;
-  inset: 0;
-  object-fit: cover;
-  box-sizing: border-box;
+  display: block;
+  line-height: 0;
 }
 
 .hero-feature img {
-  object-fit: cover;
+  display: block;
   width: 100%;
-  height: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 0;
+}
+
+/* Content row */
+.hero-feature > div:last-child {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 24px 0 0;
+}
+
+/* Eyebrow: first cell of the content row (plain text). */
+.hero-feature > div:last-child > div:first-child {
+  font-family: var(--body-font-family);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 16px;
+  letter-spacing: 0.56px;
+  text-transform: uppercase;
+  color: #000;
+  margin: 0;
+}
+
+.hero-feature h3 {
+  font-family: var(--heading-font-family-book);
+  font-size: 28px;
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: normal;
+  color: var(--text-color);
+  margin: 0;
+}
+
+/* CTA: authored as a plain <p><a>; EDS decorates it as a.button.
+   Reset the pill button styling back to an inline, uppercase text link
+   with a trailing arrow, matching the source "LEARN MORE >". */
+.hero-feature a:any-link,
+.hero-feature a.button:any-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  width: auto;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--hero-feature-cta-color);
+  font-family: var(--body-font-family);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0.84px;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: normal;
+  overflow: visible;
+}
+
+.hero-feature a:any-link::after,
+.hero-feature a.button:any-link::after {
+  content: "\203A"; /* › */
+  font-size: 1.2em;
+  line-height: 1;
+}
+
+.hero-feature a:hover,
+.hero-feature a.button:hover {
+  color: var(--hero-feature-cta-color);
+  text-decoration: underline;
+}
+
+.hero-feature .button-container {
+  margin: 0;
 }
 
 @media (width >= 900px) {
+  /* Two-column layout: image left (~6/12), content right, vertically centered.
+     Source: panel padding 80px 55px; image ~497px; 20px+ column gap. */
   .hero-feature {
-    padding: 40px 32px;
+    display: grid;
+    grid-template-columns: minmax(0, 497px) 1fr;
+    column-gap: 60px;
+    align-items: center;
+    padding: 80px 55px;
+  }
+
+  .hero-feature > div:first-child,
+  .hero-feature > div:last-child {
+    margin: 0;
+  }
+
+  .hero-feature > div:last-child {
+    gap: 24px;
+    max-width: 600px;
+  }
+
+  .hero-feature h3 {
+    /* Source: 40px / 44px line-height. */
+    font-size: 40px;
+    line-height: 44px;
   }
 }
