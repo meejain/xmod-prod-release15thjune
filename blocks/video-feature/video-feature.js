@@ -7,7 +7,20 @@
  * Authored structure (.plain.html):
  *   row 1: [ cell: <a href="...poster-image"> ]
  *   row 2: [ cell: <h2>Heading</h2> ], [ cell: <a href="...player url"> ]
+ *
+ * The poster cell holds a Dynamic Media / Scene7 image URL. The client-side
+ * DM auto-block can convert that <a> into a <picture> before this decorator
+ * runs, so the poster may arrive as an <a>, an <img>, or a <picture>. We
+ * resolve the poster from whichever form is present, and treat the remaining
+ * non-image anchor as the player link.
  */
+
+const IMG_EXT = /\.(jpe?g|png|webp|gif|avif|svg)(\?|$)/i;
+const DM_URL = /\/is\/image\/|scene7\.com|\/adobe\/assets\/urn:/i;
+
+function isImageHref(href) {
+  return !!href && (IMG_EXT.test(href) || DM_URL.test(href));
+}
 
 function buildEmbed(url) {
   const wrapper = document.createElement('div');
@@ -23,23 +36,45 @@ function buildEmbed(url) {
 }
 
 export default async function decorate(block) {
-  const links = [...block.querySelectorAll('a')];
-  const posterLink = links[0];
-  const playerLink = links[links.length - 1] !== posterLink ? links[links.length - 1] : null;
-  const heading = block.querySelector('h1, h2, h3, h4, h5, h6');
+  // Poster: prefer an already-rendered <picture>/<img> (DM auto-block output),
+  // else an anchor whose href is an image/DM URL.
+  const existingPicture = block.querySelector('picture');
+  const existingImg = block.querySelector('img');
+  const anchors = [...block.querySelectorAll('a')];
+  const posterAnchor = anchors.find((a) => isImageHref(a.getAttribute('href')));
 
-  const posterSrc = posterLink ? posterLink.getAttribute('href') : null;
-  const posterAlt = posterLink ? posterLink.textContent.trim() : '';
+  // Player: the remaining anchor that is NOT an image URL.
+  const playerLink = anchors.find((a) => !isImageHref(a.getAttribute('href')));
+
+  // The heading may be a real <hN> or a role="heading" div.
+  const heading = block.querySelector('h1, h2, h3, h4, h5, h6, [role="heading"]');
+
+  let posterAlt = '';
+  let posterSrc = null;
+  if (existingImg) {
+    posterSrc = existingImg.getAttribute('src');
+    posterAlt = existingImg.getAttribute('alt') || '';
+  } else if (posterAnchor) {
+    posterSrc = posterAnchor.getAttribute('href');
+    posterAlt = posterAnchor.textContent.trim();
+  }
+
   const playerUrl = playerLink ? playerLink.getAttribute('href') : null;
   const headingText = heading ? heading.textContent.trim() : '';
-  const headingLevel = heading ? heading.tagName.toLowerCase().replace('h', '') : '2';
-
-  block.textContent = '';
+  let headingLevel = '2';
+  if (heading) {
+    headingLevel = heading.tagName.match(/^H[1-6]$/)
+      ? heading.tagName.slice(1)
+      : (heading.getAttribute('aria-level') || '2');
+  }
 
   const panel = document.createElement('div');
   panel.className = 'video-feature-panel';
 
-  if (posterSrc) {
+  if (existingPicture) {
+    existingPicture.classList.add('video-feature-poster');
+    panel.append(existingPicture);
+  } else if (posterSrc) {
     const img = document.createElement('img');
     img.src = posterSrc;
     img.alt = posterAlt;
@@ -77,5 +112,5 @@ export default async function decorate(block) {
   }
 
   panel.append(content);
-  block.append(panel);
+  block.replaceChildren(panel);
 }

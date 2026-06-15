@@ -216,8 +216,12 @@
 }
 
 @media (width >= 900px) {
+  /* Source places the H1 in the lower-third: on a 1440x810 slide the H1 bottom
+     sits ~362px above the slide bottom with a 110px left inset. With the content
+     bottom-anchored (justify-content: flex-end), the space below the H1 is the
+     24px H1 margin + ~20px CTA line + this bottom padding (~318px). */
   .carousel-hero .carousel-hero-slide-content {
-    padding: 0 55px 56px;
+    padding: 0 110px 318px;
   }
 
   .carousel-hero .carousel-hero-navigation-buttons {
