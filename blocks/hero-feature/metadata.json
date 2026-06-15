@@ -1,0 +1,38 @@
+{
+  "variantName": "hero-feature",
+  "baseBlock": "hero",
+  "version": "1.0.0",
+  "created": "2026-06-15T00:00:00.000Z",
+  "sourceContext": {
+    "originUrl": "https://www.abbvie.com/",
+    "originPage": "AbbVie corporate homepage",
+    "blockPosition": "middle"
+  },
+  "visualCharacteristics": {
+    "colorScheme": "image-overlay",
+    "density": "spacious",
+    "purpose": "feature",
+    "imagePattern": "large"
+  },
+  "contentPattern": {
+    "structure": "background image + heading + CTA",
+    "buttonCount": 1,
+    "imageCount": 1
+  },
+  "reuseGuidance": {
+    "suitableFor": [
+      "feature banners with background image and overlaid text",
+      "impact / spotlight bands",
+      "image-led promotional sections"
+    ],
+    "notSuitableFor": [
+      "text-only CTA bands",
+      "repeating card grids"
+    ]
+  },
+  "usage": {
+    "pagesUsing": ["/index"],
+    "reuseCount": 1,
+    "lastUsed": "2026-06-15T00:00:00.000Z"
+  }
+}
