@@ -1,0 +1,38 @@
+{
+  "variantName": "video-feature",
+  "baseBlock": "video",
+  "version": "1.0.0",
+  "created": "2026-06-15T00:00:00.000Z",
+  "sourceContext": {
+    "originUrl": "https://www.abbvie.com/",
+    "originPage": "AbbVie corporate homepage",
+    "blockPosition": "middle"
+  },
+  "visualCharacteristics": {
+    "colorScheme": "light",
+    "density": "spacious",
+    "purpose": "feature",
+    "imagePattern": "large"
+  },
+  "contentPattern": {
+    "structure": "poster image + video link",
+    "buttonCount": 0,
+    "imageCount": 1
+  },
+  "reuseGuidance": {
+    "suitableFor": [
+      "large featured video players with poster",
+      "mid-page video features",
+      "mp4/youtube/vimeo embeds with play overlay"
+    ],
+    "notSuitableFor": [
+      "background autoplay-only hero video",
+      "video galleries / carousels"
+    ]
+  },
+  "usage": {
+    "pagesUsing": ["/index"],
+    "reuseCount": 1,
+    "lastUsed": "2026-06-15T00:00:00.000Z"
+  }
+}

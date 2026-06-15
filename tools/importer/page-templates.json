@@ -1,0 +1,122 @@
+{
+  "metadata": {
+    "projectType": "da"
+  },
+  "templates": [
+    {
+      "name": "homepage",
+      "urls": [
+        "https://www.abbvie.com/"
+      ],
+      "representativeUrl": "https://www.abbvie.com/",
+      "coverageGaps": [],
+      "description": "AbbVie corporate home page with hero, press releases carousel, featured cards, video blocks, teasers, stats/impact grids, and content cards across multiple themed sections",
+      "blocks": [
+        {
+          "name": "carousel-hero",
+          "instances": [
+            "#maincontent > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > div.homepage-hero-controller.aem-GridColumn.aem-GridColumn--default--12"
+          ]
+        },
+        {
+          "name": "carousel-press",
+          "instances": [
+            "#maincontent > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > div.container.abbvie-container.homepage-overlap.medium-radius.cmp-container-xx-large.height-short.align-center.aem-GridColumn.aem-GridColumn--default--12"
+          ]
+        },
+        {
+          "name": "hero-cta",
+          "instances": [
+            "#maincontent > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > div.teaser.aem-GridColumn.aem-GridColumn--default--12:nth-of-type(3)",
+            "#maincontent > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > div.container.abbvie-container.medium-radius.cmp-container-xxx-large.height-short.aem-GridColumn.aem-GridColumn--default--12"
+          ]
+        },
+        {
+          "name": "video-feature",
+          "instances": [
+            "#maincontent > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > div.video.cmp-video-xx-large.aem-GridColumn.aem-GridColumn--default--12:nth-of-type(4)",
+            "#maincontent > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > div.video.cmp-video-xx-large.aem-GridColumn.aem-GridColumn--default--12:nth-of-type(8)"
+          ]
+        },
+        {
+          "name": "cards-feature",
+          "instances": [
+            "#maincontent > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > div.grid.aem-GridColumn.aem-GridColumn--default--12:nth-of-type(6)",
+            "#maincontent > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > div.container.abbvie-container.cmp-container-large.aem-GridColumn.aem-GridColumn--default--12",
+            "#maincontent > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > div.grid.cmp-grid-custom.aem-GridColumn.aem-GridColumn--default--12",
+            "#maincontent > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > div.grid.aem-GridColumn.aem-GridColumn--default--12:nth-of-type(16)",
+            "#maincontent > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > div.container.abbvie-container.large-radius.cmp-container-full-width.height-default.no-bottom-margin.aem-GridColumn.aem-GridColumn--default--12"
+          ]
+        },
+        {
+          "name": "hero-feature",
+          "instances": [
+            "#maincontent > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > div.container.abbvie-container.default-radius.cmp-container-xxx-large.height-default.align-center.aem-GridColumn.aem-GridColumn--default--12"
+          ]
+        }
+      ],
+      "sections": [
+        {
+          "id": "rc2",
+          "name": "Press Releases",
+          "selector": "#maincontent > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > div.container.abbvie-container.homepage-overlap.medium-radius.cmp-container-xx-large.height-short.align-center.aem-GridColumn.aem-GridColumn--default--12",
+          "style": "light",
+          "blocks": [
+            "carousel-press"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "rc3",
+          "name": "Patients Intro CTA",
+          "selector": "#maincontent > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > div.teaser.aem-GridColumn.aem-GridColumn--default--12:nth-of-type(3)",
+          "style": "light",
+          "blocks": [
+            "hero-cta"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "rc7",
+          "name": "Featured Story",
+          "selector": "#maincontent > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > div.container.abbvie-container.cmp-container-large.aem-GridColumn.aem-GridColumn--default--12",
+          "style": "accent",
+          "blocks": [
+            "cards-feature"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "rc11",
+          "name": "Explore Opportunities CTA",
+          "selector": "#maincontent > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > div.container.abbvie-container.medium-radius.cmp-container-xxx-large.height-short.aem-GridColumn.aem-GridColumn--default--12",
+          "style": "dark",
+          "blocks": [
+            "hero-cta"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "rc13",
+          "name": "Investor Resources",
+          "selector": "#maincontent > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > div.grid.aem-GridColumn.aem-GridColumn--default--12:nth-of-type(16)",
+          "style": "accent",
+          "blocks": [
+            "cards-feature"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "rc16",
+          "name": "ESG Module",
+          "selector": "#maincontent > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > div.container.abbvie-container.large-radius.cmp-container-full-width.height-default.no-bottom-margin.aem-GridColumn.aem-GridColumn--default--12",
+          "style": "light",
+          "blocks": [
+            "cards-feature"
+          ],
+          "defaultContent": []
+        }
+      ]
+    }
+  ]
+}
