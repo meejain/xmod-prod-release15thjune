@@ -1,0 +1,30 @@
+:root {
+  /* AbbVie brand fonts. F37 Lineca is AbbVie's proprietary heading face;
+     it is not freely hostable, so it degrades to Helvetica/Arial. Roboto
+     (body) is loaded from Google Fonts via head.html. */
+  --heading-font-family: "F37 Lineca Medium", "F37 Lineca", helvetica, arial, sans-serif;
+  --heading-font-family-book: "F37 Lineca Book", "F37 Lineca", helvetica, arial, sans-serif;
+  --body-font-family: "Roboto", helvetica, arial, sans-serif;
+
+  /* Brand colors */
+  --background-color: #fff;
+  --text-color: #071d49; /* AbbVie navy */
+  --link-color: #071d49;
+  --link-hover-color: #8a2ecc; /* AbbVie purple accent */
+  --abbvie-navy: #071d49;
+  --abbvie-purple: #8a2ecc;
+  --abbvie-light: #f1f3ff;
+
+  /* Spacing */
+  --section-padding: 48px;
+  --nav-height: 88px;
+  --content-max-width: 1330px;
+
+  /* Heading sizes (desktop) */
+  --heading-size-xxl: 64px;
+  --heading-size-xl: 40px;
+  --heading-size-l: 40px;
+  --heading-size-m: 32px;
+  --heading-size-s: 24px;
+  --heading-size-xs: 18px;
+}

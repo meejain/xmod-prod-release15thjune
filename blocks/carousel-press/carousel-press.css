@@ -1,3 +1,29 @@
+/* carousel-press — AbbVie homepage press-release rotator.
+   A compact, light news rotator that shows one dated press-release headline
+   at a time with pagination dots and prev/next arrows. Values extracted from
+   the AbbVie source (getComputedStyle), mapped to the EDS-decorated DOM:
+
+   .carousel-press (block)
+     .carousel-press-slides-container
+       .carousel-press-navigation-buttons > button.slide-prev / button.slide-next
+       ul.carousel-press-slides
+         li.carousel-press-slide
+           div.carousel-press-slide-image   <- single content cell (date + headline)
+             p                              <- date
+             p > a                          <- headline link
+     nav > ol.carousel-press-slide-indicators
+       li.carousel-press-slide-indicator > button   <- dot
+*/
+
+.carousel-press {
+  --carousel-press-date-color: rgb(102 107 122); /* muted gray eyebrow/date */
+  --carousel-press-dot-inactive: #c7cee0; /* light navy tint */
+
+  position: relative;
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
 .carousel-press .carousel-press-slides-container {
   position: relative;
 }
@@ -9,6 +35,7 @@
   padding: 0;
 }
 
+/* horizontal slide track */
 .carousel-press .carousel-press-slides {
   display: flex;
   scroll-behavior: smooth;
@@ -23,107 +50,130 @@
 .carousel-press .carousel-press-slide {
   flex: 0 0 100%;
   scroll-snap-align: start;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  position: relative;
   width: 100%;
-  min-height: min(50vw, calc(100dvh - var(--header-height)));
+  min-height: 200px; /* matches source slide height so the card doesn't jump between slides */
 }
 
-.carousel-press .carousel-press-slide:has(.carousel-press-slide-content[data-align='center']) {
-  align-items: center;
+/* the single content cell — holds the date paragraph and the headline link */
+.carousel-press .carousel-press-slide .carousel-press-slide-image {
+  position: static;
+  inset: auto;
 }
 
-.carousel-press .carousel-press-slide:has(.carousel-press-slide-content[data-align='right']) {
-  align-items: flex-end;
+/* date paragraph (first <p> in the cell) */
+.carousel-press .carousel-press-slide .carousel-press-slide-image p:first-child {
+  margin: 0 0 12px;
+  font-family: var(--body-font-family);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 20px;
+  letter-spacing: 0.84px;
+  text-transform: uppercase;
+  color: var(--carousel-press-date-color);
 }
 
-.carousel-press .carousel-press-slide .carousel-press-slide-image picture {
-  position: absolute;
-  inset: 0;
+/* headline paragraph wrapping the link */
+.carousel-press .carousel-press-slide .carousel-press-slide-image p:last-child {
+  margin: 0;
 }
 
-.carousel-press .carousel-press-slide .carousel-press-slide-image picture > img {
-  height: 100%;
-  width: 100%;
-  object-fit: cover;
+/* headline link */
+.carousel-press .carousel-press-slide .carousel-press-slide-image a:any-link {
+  display: block;
+  font-family: var(--body-font-family);
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 24px;
+  color: var(--text-color);
+  text-decoration: none;
 }
 
-.carousel-press .carousel-press-slide .carousel-press-slide-content {
-  z-index: 1;
-  margin: 68px;
-  padding: 16px;
-  color: white;
-  background-color: rgb(19 19 19 / 75%);
-  position: relative;
-  width: var(--slide-content-width, auto);
+.carousel-press .carousel-press-slide .carousel-press-slide-image a:hover {
+  color: var(--link-hover-color);
+  text-decoration: underline;
 }
 
+/* pagination dots row */
 .carousel-press .carousel-press-slide-indicators {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   justify-content: center;
-  gap: 6px 12px;
-  padding: 12px;
-  background-color: var(--light-color);
+  gap: 6px;
+  margin: 24px 0 0;
+  padding: 0;
   line-height: 0;
 }
 
+.carousel-press .carousel-press-slide-indicator {
+  display: flex;
+}
+
 .carousel-press .carousel-press-slide-indicator button {
-  width: 24px;
-  height: 24px;
+  width: 10px;
+  height: 10px;
   margin: 0;
   padding: 0;
+  border: 0;
   border-radius: 50%;
-  background-color: #dadada;
+  background-color: var(--carousel-press-dot-inactive);
+  cursor: pointer;
   transition: background-color 0.2s;
 }
 
+/* active (disabled) and hovered dot = brand navy */
 .carousel-press .carousel-press-slide-indicator button:disabled,
 .carousel-press .carousel-press-slide-indicator button:hover,
 .carousel-press .carousel-press-slide-indicator button:focus-visible {
-  background-color: var(--text-color);
+  background-color: var(--abbvie-navy);
 }
 
+/* prev / next arrow row — visually flanks the centered pagination dots.
+   The EDS carousel JS renders the arrows inside the slides container and the
+   dots in a sibling <nav> below it. We pull the arrows down to sit on the same
+   line as the dots and center the whole < • • • > cluster. */
 .carousel-press .carousel-press-navigation-buttons {
   position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  left: 12px;
-  right: 12px;
+  bottom: -34px;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
+  gap: 96px; /* opens a gap for the centered dots to sit between the arrows */
   z-index: 1;
 }
 
+/* keep the arrows clickable while the row spans full width */
 /* stylelint-disable-next-line no-descending-specificity */
 .carousel-press .carousel-press-navigation-buttons button {
   position: relative;
-  width: 44px;
-  height: 44px;
+  width: 28px;
+  height: 28px;
   margin: 0;
-  border-radius: 50%;
   padding: 0;
-  background-color: rgb(19 19 19 / 25%);
-  transition: background-color 0.2s;
+  border: 0;
+  border-radius: 0;
+  background-color: transparent;
+  color: var(--abbvie-navy);
+  cursor: pointer;
+  transition: color 0.2s;
 }
 
 .carousel-press .carousel-press-navigation-buttons button:hover,
 .carousel-press .carousel-press-navigation-buttons button:focus-visible {
-  background-color: rgb(19 19 19 / 75%);
+  color: var(--link-hover-color);
 }
 
+/* chevron glyphs drawn with borders */
 .carousel-press .carousel-press-navigation-buttons button::after {
   display: block;
   content: '';
-  border: 2px solid;
+  border: 2px solid currentcolor;
   border-bottom: 0;
   border-left: 0;
-  height: 12px;
-  width: 12px;
+  height: 10px;
+  width: 10px;
   position: absolute;
   top: 50%;
   left: calc(50% + 2px);
@@ -135,19 +185,15 @@
   left: calc(50% - 2px);
 }
 
-@media (width >= 600px) {
-  .carousel-press .carousel-press-navigation-buttons {
-    left: 24px;
-    right: 24px;
+/* desktop: the AbbVie press card sits in a fixed ~356px column, so cap the
+   rotator width and align dots/arrows to that column rather than full bleed */
+@media (width >= 900px) {
+  .carousel-press .carousel-press-slide {
+    min-height: 220px;
   }
 
-  .carousel-press .carousel-press-slide .carousel-press-slide-content {
-    --slide-content-width: calc((100% - 184px) / 2);
-
-    margin: 92px;
-  }
-
-  .carousel-press .carousel-press-slide .carousel-press-slide-content[data-align='justify'] {
-    --slide-content-width: auto;
+  .carousel-press .carousel-press-slide .carousel-press-slide-image a:any-link {
+    font-size: 20px;
+    line-height: 24px;
   }
 }

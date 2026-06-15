@@ -78,7 +78,23 @@ function createSlide(row, slideIndex, carouselId) {
   slide.classList.add('carousel-hero-slide');
 
   row.querySelectorAll(':scope > div').forEach((column, colIdx) => {
-    column.classList.add(`carousel-hero-slide-${colIdx === 0 ? 'image' : 'content'}`);
+    const isImage = colIdx === 0;
+    column.classList.add(`carousel-hero-slide-${isImage ? 'image' : 'content'}`);
+
+    // The image cell is authored as a bare anchor pointing at the background
+    // image URL (e.g. a Scene7 URL). EDS does not render that as an image, so
+    // convert it into an <img> that the CSS can size as a full-bleed cover.
+    if (isImage) {
+      const link = column.querySelector('a[href]');
+      if (link && !column.querySelector('img, picture')) {
+        const img = document.createElement('img');
+        img.src = link.getAttribute('href');
+        img.alt = link.textContent.trim();
+        img.loading = colIdx === 0 ? 'eager' : 'lazy';
+        column.replaceChildren(img);
+      }
+    }
+
     slide.append(column);
   });
 
